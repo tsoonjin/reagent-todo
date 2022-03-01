@@ -6,7 +6,7 @@
 
 ;; -- App State --
 (def init-todos {
-                 3 {:id 3, :title "Clean cpu", :done false}
+                 2 {:id 2, :title "Clean cpu", :done false}
                  1 {:id 1, :title "Do homework", :done false}
                  })
 
@@ -21,15 +21,17 @@
 
 (defn add-todo [text]
   (let [id (swap! todo-id inc)
-        new-todo {:id todo-id, :title text, :done false}]
+        new-todo {:id id, :title text, :done false}]
     (swap! todos assoc id new-todo)))
+
+(defn delete-todo [id] (swap! todos dissoc id))
 
 (defn app []
   [:div
    [:section.todoapp
-    [view/task-entry add-todo]
+    [view/task-entry add-todo delete-todo]
     [:div
-     [view/task-list todos]
+     [view/task-list todos delete-todo]
      [view/footer-controls]]
     ]
    [:footer.info
